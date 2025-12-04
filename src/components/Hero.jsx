@@ -1,7 +1,24 @@
 import { Search, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Hero = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const navigate = useNavigate();
+
+  const handleSearch = () => {
+    // Ir a la página de búsqueda con el término (ruta pública)
+    const searchParams = searchTerm ? `?search=${encodeURIComponent(searchTerm)}` : '';
+    navigate(`/search${searchParams}`);
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
+  };
+
   return (
     <section className="relative bg-gradient-to-br from-primary via-blue-600 to-blue-700 pt-24 pb-16 md:pt-32 md:pb-24 overflow-hidden">
       {/* Decorative Elements */}
@@ -61,9 +78,15 @@ const Hero = () => {
                   type="text"
                   placeholder="¿Qué necesitas? (ej: plomero, electricista...)"
                   className="flex-1 bg-transparent outline-none text-gray-700 font-inter placeholder-gray-400"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  onKeyPress={handleKeyPress}
                 />
               </div>
-              <button className="bg-secondary hover:bg-orange-600 text-white px-8 py-4 rounded-xl font-inter font-semibold transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2 group">
+              <button 
+                onClick={handleSearch}
+                className="bg-secondary hover:bg-orange-600 text-white px-8 py-4 rounded-xl font-inter font-semibold transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2 group"
+              >
                 Buscar Maestro
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </button>
