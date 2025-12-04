@@ -88,6 +88,11 @@ chaskipro-platform/
   - Inter (Textos)
 - **Responsive**: Mobile First (se adapta perfectamente a todos los dispositivos)
 
+### 🆕 Actualizaciones recientes
+- **Búsqueda de profesionales estable**: la página `/search` consulta el endpoint público `/api/professionals/search` y, si hay sesión, también `/api/profesionales/search`, enviando los filtros (`search/query`, `communeId/comunaId`, `professionCategory/categoria`, `minRating`). Deja de recargar en bucle y muestra errores en pantalla si la API responde con 4xx/5xx.
+- **Sesiones seguras**: en respuestas 401 solo se limpia el token, sin redirigir ni romper vistas públicas.
+- **Carga defensiva de comunas**: el listado de comunas se omite si la API devuelve error (por ejemplo, 400), manteniendo el resto de la página operativa.
+
 ---
 
 ## 🛠️ Comandos Disponibles
